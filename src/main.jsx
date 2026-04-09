@@ -1,9 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { RouterProvider } from "react-router";
+import { router } from "./router/Router";
 
-createRoot(document.getElementById('root')).render(
+
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <h1 className='btn btn-primary text-2xl'>Hello, World!</h1>
+    <RouterProvider router={router} />
   </StrictMode>,
-)
+);

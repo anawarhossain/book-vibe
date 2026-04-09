@@ -1,16 +1,59 @@
-# React + Vite
+# Book Vibe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Book Vibe is a React + Vite application for browsing and managing book-related pages. It uses Tailwind CSS and daisyUI for styling, with React Router for client-side navigation.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Home page
+- Listed books page
+- Pages to read page
+- Sign in and Sign up pages
+- 404 Not Found handling for unknown routes
 
-## React Compiler
+## Project structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/main.jsx` — app entry point
+- `src/router/Router.jsx` — route configuration
+- `src/layout/MainLayout.jsx` — shared layout and navigation
+- `src/pages/` — page components for home, listed books, pages to read, sign in/up, and not found
+- `src/assets/` — static images and icons
+- `src/data/booksData.json` — book data
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Dependencies
+
+- `react`
+- `react-dom`
+- `react-router`
+- `tailwindcss`
+- `@tailwindcss/vite`
+- `daisyui`
+
+## Notes
+
+This project is configured as an ES module app with Vite and ESLint. If you want to add TypeScript later, install the TypeScript dependencies and update the Vite configuration accordingly.

@@ -1,10 +1,11 @@
 import React from "react";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router";
 
 const BookCard = ({ book }) => {
   return (
-    <div>
+    <Link to={`/book-details/${book.bookId}`}>
       <div
         className=" p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 cursor-pointer"
       >
@@ -12,7 +13,7 @@ const BookCard = ({ book }) => {
         <div className="bg-[#f3f3f3] rounded-lg py-8 flex justify-center mb-6">
           <img
             src={book.image}
-            alt="Book Cover"
+            alt={book.bookName}
             className="h-40 w-auto shadow-xl"
           />
         </div>
@@ -51,7 +52,7 @@ const BookCard = ({ book }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

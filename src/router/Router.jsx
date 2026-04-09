@@ -6,15 +6,22 @@ import PagesToRead from "../pages/pagesToRead/PagesToRead";
 import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import SignIn from "../pages/sign/SignIn";
 import SignUp from "../pages/sign/SignUp";
+import BookDetails from "../pages/bookDetails/BookDetails";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    hydrateFallbackElement: <div className="loading">Loading...</div>,
     children: [
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/book-details/:itemId",
+        element: <BookDetails />,
+        loader: () => fetch("/data/booksData.json").then((res) => res.json()),
       },
       {
         path: "/listed-books",

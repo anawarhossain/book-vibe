@@ -64,7 +64,7 @@ const WishList = ({book}) => {
                 Category: {book.category}
               </span>
               <span className="bg-orange-50 text-orange-400 px-5 py-2 rounded-full text-sm font-medium">
-                Rating: 4.5
+                Rating: {book.rating}
               </span>
               <button className="bg-[#23BE0A] hover:bg-green-600 transition-colors text-white px-6 py-2 rounded-full font-semibold text-sm ml-auto">
                 View Details

@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BookContext } from "../../context/BookProvider";
 import ReadList from "../../components/ui/ReadList";
 import WishList from "../../components/ui/WishList";
 
 const ListedBooks = () => {
   const [activeTab, setActiveTab] = useState("read");
+  const [sortOption, setSortOption] = useState("");
 
+  
+
+  console.log(sortOption);
   const {
     handleMarkAsRead,
     storedBook,
@@ -15,18 +19,46 @@ const ListedBooks = () => {
     setWishlist,
   } = useContext(BookContext);
 
-  console.log(
-    storedBook,
-    wishList,
-    "BookContext data in BookDetails component.",
-  );
+
+  const [filteredReadList, setFilteredReadList] = useState(storedBook);
+
+  useEffect(() => {
+    if (sortOption) {
+      if (sortOption === "pages") {
+        const sorteData = [...storedBook].sort((a, b) => a.totalPages - b.totalPages);
+        setFilteredReadList(sorteData);
+      } else if (sortOption === "rating") {
+        const sorteData = [...storedBook].sort((a, b) => b.rating - a.rating);
+        setFilteredReadList(sorteData);
+      }
+    }
+  }, [sortOption, storedBook]);
+
+
+  const [filteredWishList, setFilteredWishList] = useState(wishList);
+
+  useEffect(() => {
+    if (sortOption) {
+      if (sortOption === "pages") {
+        const sorteData = [...wishList].sort(
+          (a, b) => a.totalPages - b.totalPages,
+        );
+        setFilteredWishList(sorteData);
+      } else if (sortOption === "rating") {
+        const sorteData = [...wishList].sort((a, b) => b.rating - a.rating);
+        setFilteredWishList(sorteData);
+      }
+    }
+  }, [sortOption, wishList]);
+
+
 
   return (
     <div className="container mx-auto space-y-6">
       <div className="bg-gray-200 p-4 rounded-lg">
         <h1 className="text-4xl text-center">Books</h1>
       </div>
-      <div className=" mx-auto w-25 bg-green-400">
+      {/* <div className=" mx-auto w-25 bg-green-400">
         <select
           defaultValue="Pick a Runtime"
           className="select bg-green-500 text-white"
@@ -36,6 +68,24 @@ const ListedBooks = () => {
           <option>Bun</option>
           <option>yarn</option>
         </select>
+      </div> */}
+      <div className="text-center">
+        <div className="dropdown dropdown-start">
+          <div tabIndex={0} role="button" className="btn m-1">
+            Sort By {sortOption} ⬇️
+          </div>
+          <ul
+            tabIndex="-1"
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
+            <li onClick={() => setSortOption("pages")}>
+              <a>Page</a>
+            </li>
+            <li onClick={() => setSortOption("rating")}>
+              <a>Rating</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="w-full mx-auto mt-10 px-4">
         {/* Tab Container */}
@@ -69,20 +119,33 @@ const ListedBooks = () => {
         <div className="py-6">
           {activeTab === "read" ? (
             <div className="flex flex-col gap-4">
-              {storedBook.map((book) => {
+              {filteredReadList.length === 0 && (
+                <div className="text-center text-slate-500">
+                  No books marked as read yet. Start reading and mark your books
+                  here!
+                </div>
+              )}
+
+              {filteredReadList.map((book) => {
                 return (
                   <div key={book.bookId} className="">
-                    <ReadList book={book} />
+                    <ReadList book={book} sortOption={sortOption} />
                   </div>
                 );
               })}
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              {wishList.map((book) => {
+              {filteredWishList.length === 0 && (
+                <div className="text-center text-slate-500">
+                  No books in wishlist yet. Start adding books to your wishlist!
+                </div>
+              )}
+
+              {filteredWishList.map((book) => {
                 return (
                   <div key={book.bookId} className="">
-                    <WishList book={book} />
+                    <WishList book={book} sortOption={sortOption} />
                   </div>
                 );
               })}

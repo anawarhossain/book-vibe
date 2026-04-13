@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import CustomShapeBarChart from "../../components/ui/CustomShapeBarChart";
 
 const PagesToRead = () => {
-    return (
-        <div>
-            Pages To Read
-        </div>
-    );
+  return (
+    <div>
+      <CustomShapeBarChart />
+    </div>
+  );
 };
 
 export default PagesToRead;

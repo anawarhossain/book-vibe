@@ -8,55 +8,10 @@ import {
   Label,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from 'recharts';
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink', 'black'];
-
-// #region Sample data
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
 // #endregion
 const getPath = (x, y, width, height) => {
@@ -67,41 +22,61 @@ const getPath = (x, y, width, height) => {
 };
 
 const TriangleBar = (props) => {
-  const { x, y, width, height, index } = props;
+  const { x, y, width, height, fill } = props; // 'fill' comes from the Cell mapping below
+  return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
+};
 
-  const color = colors[index % colors.length];
-
+// Simplified Label component
+const renderCustomBarLabel = ({ x, y, width, value, index }) => {
   return (
-    <path
-      strokeWidth={props.isActive ? 5 : 0}
-      d={getPath(Number(x), Number(y), Number(width), Number(height))}
-      stroke={color}
-      fill={color}
-      style={{
-        transition: 'stroke-width 0.3s ease-out',
-      }}
-    />
+    <text 
+      x={x + width / 2} 
+      y={y - 10} 
+      fill={colors[index % colors.length]} 
+      textAnchor="middle" 
+      dominantBaseline="middle"
+      className="font-bold text-xs"
+    >
+      {value}
+    </text>
   );
 };
 
-const CustomColorLabel = (props) => {
-  const fill = colors[(props.index ?? 0) % colors.length];
-  return <Label {...props} fill={fill} />;
-};
-
-export default function CustomShapeBarChart() {
-    return (
-        <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Bar dataKey="uv" shape={TriangleBar}>
-                <LabelList content={CustomColorLabel} position="top" />
-                </Bar>
-            </BarChart>
-        </ResponsiveContainer>
-    
+export default function CustomShapeBarChart({ chartData }) {
+  return (
+    <div className="w-full bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+      <ResponsiveContainer width="100%" height={450}>
+        {" "}
+        {/* Ensure height is defined here */}
+        <BarChart
+          data={chartData}
+          margin={{ top: 30, right: 30, left: 20, bottom: 80 }} // Increased bottom margin for titles
+        >
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis
+            dataKey="bookName"
+            interval={0}
+            tick={{ fontSize: 11, fill: "#64748b" }}
+            angle={-45} // More aggressive angle for long book names
+            textAnchor="end"
+          />
+          <YAxis tick={{ fontSize: 12, fill: "#64748b" }} />
+          <Tooltip cursor={{ fill: "transparent" }} />
+          <Bar
+            dataKey="totalPages"
+            shape={<TriangleBar />}
+            isAnimationActive={true}
+          >
+            {chartData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={colors[index % colors.length]}
+              />
+            ))}
+            <LabelList dataKey="totalPages" content={renderCustomBarLabel} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

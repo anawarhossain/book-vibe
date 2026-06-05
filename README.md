@@ -68,3 +68,23 @@ npm run preview
 ## Notes
 
 The project is configured as an ES module app with Vite and ESLint. TypeScript support can be added later by installing TypeScript packages and updating Vite configuration if needed.
+
+## 👨‍💻 Author
+**Md Anawar Hossain**
+- **GitHub:** [@anawarhossain](https://github.com/anawarhossain)
+- **Facebook:** [Anawar Hossain](https://web.facebook.com/AnawarHossain55)
+- **LinkeIn:** [Anawar Hossain](https://www.linkedin.com/in/anawarhossain/)
+- **X(Twitter):** [Anawar Hossain](https://x.com/MDANAWAR22)
+- **WhatsApp:** [Anawar Hossain](https://wa.me/+8801701020694)
+- **Role:** Junior Developer
+
+
+## Live Link
+
+- [Live Link](https://anawarhossain-book-vibe.netlify.app/)
+
+## Project Screenshot
+
+<p align="center">
+  <img src="public/preview.png" alt="Project Preview" width=" ">
+</p>
